@@ -10,9 +10,8 @@ import { InitialDataResolver } from 'app/app.resolvers';
 export const appRoutes: Route[] = [
 
     // Redirect empty path to '/dashboards/project'
-    {path: '', pathMatch : 'full', redirectTo: 'dashboards/project'},
+    {path: '', pathMatch : 'full', redirectTo: 'logs/alertas/1'},
 
-    
     // Admin routes
     {
         path       : '',
@@ -28,9 +27,11 @@ export const appRoutes: Route[] = [
         children   : [
 
             // Dashboards
-            {path: 'dashboards', children: [
-                {path: 'project', loadChildren: () => import('app/modules/admin/dashboards/project/project.module').then(m => m.ProjectModule)}
+            {path: 'logs', children: [
+                {path: 'alertas/:idAmbiente', loadChildren: () => import('app/modules/admin/dashboards/project/project.module').then(m => m.ProjectModule)}
             ]}
         ]
-    }
+    },
+
+    {path: '**', pathMatch : 'full', redirectTo: 'logs/alertas/1'},
 ];
